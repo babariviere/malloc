@@ -6,7 +6,7 @@
 /*   By: briviere <briviere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 15:16:12 by briviere          #+#    #+#             */
-/*   Updated: 2018/02/05 17:02:16 by briviere         ###   ########.fr       */
+/*   Updated: 2018/02/05 17:24:59 by briviere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,12 @@ t_block	*block_create(t_page *dest, size_t size)
 	return (block);
 }
 
+// TODO:
+//void	block_delete(t_page **ref, t_block *blk)
+//{
+//	
+//}
+//
 t_page	*get_block_page(const t_page *ref, const t_block *blk)
 {
 	t_page	*page;

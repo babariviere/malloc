@@ -6,7 +6,7 @@
 /*   By: briviere <briviere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 15:58:16 by briviere          #+#    #+#             */
-/*   Updated: 2018/02/05 16:38:58 by briviere         ###   ########.fr       */
+/*   Updated: 2018/02/05 17:26:13 by briviere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,12 @@ typedef struct	s_page {
 	struct s_page	*next;
 }				t_page;
 
+t_page			**get_first_page();
+
 /** FUTURE PROTOTYES **/
 t_page			*page_create(size_t size);
 void			page_append(t_page **ref, t_page *page);
+void			page_delete(t_page **ref, t_page *page);
 size_t			page_size();
 size_t			page_mem_left(t_page *page);
 int				page_unused(const t_page *page);

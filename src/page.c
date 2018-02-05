@@ -6,12 +6,20 @@
 /*   By: briviere <briviere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 14:57:31 by briviere          #+#    #+#             */
-/*   Updated: 2018/02/05 17:03:58 by briviere         ###   ########.fr       */
+/*   Updated: 2018/02/05 17:28:57 by briviere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_mem_prv.h"
 #include <stdio.h>
+
+// TODO: pthread block
+inline t_page	**get_first_page()
+{
+	static t_page	*page;
+
+	return (&page);
+}
 
 t_page			*page_create(size_t size)
 {
@@ -56,8 +64,11 @@ void			page_delete(t_page **ref, t_page *page)
 
 	if (*ref == page)
 	{
+		if (page->next)
+			*ref = page->next;
+		else
+			*ref = 0;
 		munmap(page, page->len);
-		*ref = 0;
 		return ;
 	}
 	start_ref = *ref;

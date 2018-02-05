@@ -4,7 +4,7 @@ endif
 
 NAME = libft_malloc_$(HOSTTYPE).so
 
-SRC_NAME=malloc.c page.c block.c page_hlp.c
+SRC_NAME=malloc.c page.c block.c page_hlp.c free.c
 SRC=$(addprefix src/, $(SRC_NAME))
 OBJ=$(patsubst src/%.c, obj/%.o, $(SRC))
 
@@ -28,8 +28,7 @@ fclean: clean
 
 re: fclean all
 
-help:
-	@echo 'run the following command to replace system malloc:'
-	@echo 'export DYLD_LIBRARY_PATH=$(shell pwd)'
-	@echo 'export DYLD_INSERT_LIBRARIES=$(NAME)'
-	@echo 'export DYLD_FORCE_FLAT_NAMESPACE'
+fish:
+	@echo 'setenv DYLD_LIBRARY_PATH /Users/briviere/projects/malloc'
+	@echo 'setenv DYLD_INSERT_LIBRARIES libft_malloc_x86_64_Darwin.so'
+	@echo 'setenv DYLD_FORCE_FLAT_NAMESPACE'
