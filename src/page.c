@@ -6,11 +6,12 @@
 /*   By: briviere <briviere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 14:57:31 by briviere          #+#    #+#             */
-/*   Updated: 2018/02/05 15:14:58 by briviere         ###   ########.fr       */
+/*   Updated: 2018/02/05 17:03:58 by briviere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_mem.h"
+#include "ft_mem_prv.h"
+#include <stdio.h>
 
 t_page			*page_create(size_t size)
 {
@@ -18,56 +19,53 @@ t_page			*page_create(size_t size)
 	size_t	needed_pages;
 	size_t	new_size;
 
-	needed_pages = (size + sizeof(t_page) + sizeof(t_zone)) / page_size() + 1;
+	needed_pages = (size + sizeof(t_page) + sizeof(t_block)) / page_size() + 1;
 	new_size = needed_pages * page_size();
 	if ((new_page = mmap(0, new_size, PROT_READ | PROT_WRITE,
 						MAP_PRIVATE | MAP_ANON, -1, 0)) == 0)
 		return (0);
 	new_page->len = new_size;
 	new_page->next = 0;
-	new_page->start = (t_zone *)(new_page + 1);
-	new_page->start->len = size;
-	new_page->start->next = 0;
-	new_page->start->free = 0;
+	new_page->start = 0;
+	printf("new page with size %ld at %p\n", new_size, new_page);
 	return (new_page);
 }
 
-inline size_t	page_size()
+void			page_append(t_page **ref, t_page *page)
 {
-	static size_t	size;
+	t_page	*curr;
 
-	if (size == 0)
-		size = getpagesize();
-	return (size);
+	if (*ref == 0)
+	{
+		*ref = page;
+		return ;
+	}
+	curr = *ref;
+	while (curr->next)
+		curr = curr->next;
+	curr->next = page;
 }
 
-size_t			page_mem_left(t_page *page)
+// TODO: test it with free
+// seems to work
+void			page_delete(t_page **ref, t_page *page)
 {
-	size_t	left;
-	t_zone	*zone;
+	t_page	*start_ref;
+	t_page	*prev;
+	t_page	*next;
 
-	left = page->len - sizeof(t_page);
-	zone = page->start;
-	while (zone)
+	if (*ref == page)
 	{
-		left -= sizeof(t_zone);
-		if (!zone->free)
-			left -= zone->len;
-		zone = zone->next;
+		munmap(page, page->len);
+		*ref = 0;
+		return ;
 	}
-	return (left);
-}
-
-int				page_unused(const t_page *page)
-{
-	t_zone	*zone;
-
-	zone = page->start;
-	while (zone)
-	{
-		if (!zone->free)
-			return (0);
-		zone = zone->next;
-	}
-	return (1);
+	start_ref = *ref;
+	next = page->next;
+	prev = *ref;
+	while (prev->next != page)
+		prev = prev->next;
+	munmap(page, page->len);
+	prev->next = next;
+	*ref = start_ref;
 }
