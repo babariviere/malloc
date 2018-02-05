@@ -3,15 +3,12 @@
 
 int		main(void)
 {
-	size_t	size;
 	char	*addr;
 
-	addr = malloc(11);
 	for (int i = 0; i < 10; i++)
-		addr[i] = '0';
-	addr[10] = 0;
-	printf("%s\n", addr);
-	for (int i = 0; i < 10; i++)
-		printf("addr=%p\n", malloc(11));
+	{
+		addr = malloc(16);
+		printf("program =>      addr: %p, malloced: %d\n", addr, 16 * (i + 1));
+	}
 	return (0);
 }

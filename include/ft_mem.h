@@ -6,7 +6,7 @@
 /*   By: briviere <briviere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 13:32:05 by briviere          #+#    #+#             */
-/*   Updated: 2018/02/05 15:00:35 by briviere         ###   ########.fr       */
+/*   Updated: 2018/02/05 15:17:06 by briviere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,11 @@ void	*malloc(size_t size);
 void	*realloc(void *ptr, size_t size);
 
 /** FUTURE PROTOTYES **/
+t_page	*page_create(size_t size);
+size_t	page_size();
 size_t	page_mem_left(t_page *page);
+int		page_unused(const t_page *page);
+
+t_zone	*zone_create(t_page *dest, size_t size);
 
 #endif

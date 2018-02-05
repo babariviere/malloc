@@ -4,12 +4,12 @@ endif
 
 NAME = libft_malloc_$(HOSTTYPE).so
 
-SRC_NAME=malloc.c page.c
+SRC_NAME=malloc.c page.c zone.c
 SRC=$(addprefix src/, $(SRC_NAME))
 OBJ=$(patsubst src/%.c, obj/%.o, $(SRC))
 
 INC = -Iinclude
-CFLAGS = -Wall -Werror -Wextra $(INC)
+CFLAGS = -Wall -Werror -Wextra $(INC) -g
 
 all: $(NAME)
 
