@@ -6,7 +6,7 @@
 /*   By: briviere <briviere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 15:16:12 by briviere          #+#    #+#             */
-/*   Updated: 2018/02/05 17:24:59 by briviere         ###   ########.fr       */
+/*   Updated: 2018/02/06 15:52:29 by briviere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ t_block	*block_create(t_page *dest, size_t size)
 	block = dest->start;
 	if (block == 0)
 	{
-		dest->start = (t_block *)(dest + 1);
+		dest->start = PAGE_DATA(dest);
 		dest->start->len = size;
 		dest->start->next = 0;
 		dest->start->free = 0;
@@ -31,7 +31,7 @@ t_block	*block_create(t_page *dest, size_t size)
 		block = block->next;
 	prev_block = block;
 	ptr = (char *)block;
-	block = (t_block *)(ptr + block->len);
+	block = (t_block *)ptr + block->len;
 	block += 1;
 	prev_block->next = block;
 	block->len = size;
@@ -45,14 +45,15 @@ t_block	*block_create(t_page *dest, size_t size)
 //{
 //	
 //}
-//
+
+// FIXME: unable to find page in certain condition
 t_page	*get_block_page(const t_page *ref, const t_block *blk)
 {
 	t_page	*page;
 	char	*tmp;
 
 	page = (t_page *)ref;
-	while (1)
+	while (page)
 	{
 		tmp = (char *)page;
 		if ((void *)tmp > (void *)blk)
@@ -64,5 +65,5 @@ t_page	*get_block_page(const t_page *ref, const t_block *blk)
 			return (page);
 		page = page->next;
 	}
-	return (page);
+	return (0);
 }

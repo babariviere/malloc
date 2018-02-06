@@ -6,16 +6,23 @@
 /*   By: briviere <briviere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 15:58:16 by briviere          #+#    #+#             */
-/*   Updated: 2018/02/05 17:26:13 by briviere         ###   ########.fr       */
+/*   Updated: 2018/02/06 15:51:56 by briviere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_MEM_PRV_H
 # define FT_MEM_PRV_H
 
+# include <pthread.h>
 # include <string.h>
 # include <sys/mman.h>
 # include <unistd.h>
+
+# define BLOCK_SIZE (sizeof(t_block))
+# define BLOCK_DATA(x) ((void *)((char *)x + BLOCK_SIZE + 1))
+
+# define PAGE_SIZE (sizeof(t_page))
+# define PAGE_DATA(x) ((void *)((char *)x + PAGE_SIZE + 1))
 
 typedef struct	s_block {
 	size_t			len;
@@ -42,5 +49,8 @@ t_page			*find_avail_page(t_page *ref, size_t len);
 
 t_block			*block_create(t_page *dest, size_t size);
 t_page			*get_block_page(const t_page *ref, const t_block *blk);
+
+void			lock_mutex(void);
+void			unlock_mutex(void);
 
 #endif

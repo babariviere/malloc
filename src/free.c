@@ -6,11 +6,12 @@
 /*   By: briviere <briviere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 17:13:27 by briviere          #+#    #+#             */
-/*   Updated: 2018/02/05 17:26:49 by briviere         ###   ########.fr       */
+/*   Updated: 2018/02/06 16:30:44 by briviere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_mem_prv.h"
+#include "ft_io.h"
 #include <stdio.h>
 
 void	free(void *ptr)
@@ -19,15 +20,27 @@ void	free(void *ptr)
 	t_page	*page;
 	t_block	*blk;
 
+	ft_putstr("try freeing: ");
+	ft_putaddr(ptr);
+	ft_putchar('\n');
+	lock_mutex();
 	first_page = get_first_page();
 	if (first_page == 0)
 		return ;
-	blk = ptr - sizeof(t_block);
-	page = get_block_page(*first_page, blk);
+	blk = (t_block *)ptr - 1;
 	blk->free = 1;
+	page = get_block_page(*first_page, blk);
+	unlock_mutex();
+	ft_putaddr(page);
+	ft_putchar('\n');
+	// TODO: 
+	if (page == 0)
+		return ;
 	if (page_unused(page))
 	{
-		printf("page unused: %p\n", page);
+		lock_mutex();
+		ft_putendl("free unused page");
 		page_delete(first_page, page);
+		unlock_mutex();
 	}
 }

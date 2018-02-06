@@ -1,23 +1,14 @@
-#include <stdio.h>
-#include <ft_mem.h>
+#include "ft_io.h"
 
 int		main(void)
 {
-	char	*addr;
-	char	*addrs[20];
+	int i;
+	char *addr;
 
-	for (int i = 0; i < 20; i+=2)
+	i = 0;
+	while (i < 1024)
 	{
-		addr = malloc(4000);
-		addrs[i] = addr;
-		addr = malloc(4097);
-		addrs[i + 1] = addr;
-		//printf("program =>      addr: %p, malloced: %d\n", addr, 16 * (i + 1));
-	}
-	// TODO: fix free which free only one page
-	for (int i = 0; i < 20; i += 2)
-	{
-		free(addrs[i]);
+		i++;
 	}
 	return (0);
 }
