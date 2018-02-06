@@ -6,7 +6,7 @@
 /*   By: briviere <briviere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 13:31:37 by briviere          #+#    #+#             */
-/*   Updated: 2018/02/06 16:12:22 by briviere         ###   ########.fr       */
+/*   Updated: 2018/02/06 19:44:31 by briviere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ void	*malloc(size_t size)
 	}
 	else
 	{
+		// TODO: fix when there is enough space but not in one block
 		page = find_avail_page(*first_page, size);
 		if (page == 0)
 		{
