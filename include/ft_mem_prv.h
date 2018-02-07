@@ -6,7 +6,7 @@
 /*   By: briviere <briviere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 15:58:16 by briviere          #+#    #+#             */
-/*   Updated: 2018/02/06 15:51:56 by briviere         ###   ########.fr       */
+/*   Updated: 2018/02/07 11:06:10 by briviere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ size_t			page_size();
 size_t			page_mem_left(t_page *page);
 int				page_unused(const t_page *page);
 t_page			*find_avail_page(t_page *ref, size_t len);
+t_block			*page_request_space(t_page *ref, size_t len);
 
 t_block			*block_create(t_page *dest, size_t size);
 t_page			*get_block_page(const t_page *ref, const t_block *blk);

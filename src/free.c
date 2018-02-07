@@ -6,7 +6,7 @@
 /*   By: briviere <briviere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 17:13:27 by briviere          #+#    #+#             */
-/*   Updated: 2018/02/06 16:30:44 by briviere         ###   ########.fr       */
+/*   Updated: 2018/02/07 11:08:43 by briviere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ void	free(void *ptr)
 	ft_putstr("try freeing: ");
 	ft_putaddr(ptr);
 	ft_putchar('\n');
+	if (ptr == 0)
+		return ;
 	lock_mutex();
 	first_page = get_first_page();
 	if (first_page == 0)

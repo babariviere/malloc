@@ -6,7 +6,7 @@
 /*   By: briviere <briviere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 13:31:37 by briviere          #+#    #+#             */
-/*   Updated: 2018/02/06 19:44:31 by briviere         ###   ########.fr       */
+/*   Updated: 2018/02/07 11:05:44 by briviere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void	*malloc(size_t size)
 	{
 		*first_page = page_create(size);
 		page = *first_page;
+		res = block_create(page, size);
 	}
 	else
 	{
@@ -39,9 +40,11 @@ void	*malloc(size_t size)
 		{
 			page = page_create(size);
 			page_append(first_page, page);
+			res = block_create(page, size);
 		}
+		else
+			res = page_request_space(page, size);
 	}
-	res = block_create(page, size);
 	unlock_mutex();
 	if (res == 0)
 		return (0);
