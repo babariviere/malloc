@@ -32,30 +32,27 @@ fclean: clean
 
 re: fclean all
 
+lldb_init:
 ifeq ($(shell uname), Linux)
-test: all
-	gcc test.c -Iinclude -g -O0 -L. -lft_malloc_$(HOSTTYPE)
-	@LD_LIBRARY_PATH=.:$(LD_LIBRARY_PATH) ./a.out
-
-lldb_env:
-	@echo 'env LD_PRELOAD=$(NAME)'
-
-lldb: all
 	@echo 'env LD_PRELOAD=$(shell pwd)/$(NAME)' > .lldbinit
+else
+	@echo 'env DYLD_LIBRARY_PATH=/Users/briviere/projects/malloc' > .lldbinit
+	@echo 'env DYLD_INSERT_LIBRARIES=libft_malloc_x86_64_Darwin.so' > .lldbinit
+	@echo 'env DYLD_FORCE_FLAT_NAMESPACE=1' > .lldbinit
+endif
+
+lldb: all lldb_init
 	@gcc -o test test.c $(CFLAGS)
 	@lldb ./test
 	@rm -f test
 
-ls: all
+ls: all lldb_init
 	@echo 'env LD_PRELOAD=$(shell pwd)/$(NAME)' > .lldbinit
 	@lldb ls
-else
-lldb_env:
-	@echo 'env DYLD_LIBRARY_PATH=/Users/briviere/projects/malloc'
-	@echo 'env DYLD_INSERT_LIBRARIES=libft_malloc_x86_64_Darwin.so'
-	@echo 'env DYLD_FORCE_FLAT_NAMESPACE=1'
-endif
 
+test: all
+	gcc test.c -Iinclude -g -O0 -L. -lft_malloc_$(HOSTTYPE)
+	@LD_LIBRARY_PATH=.:$(LD_LIBRARY_PATH) ./a.out
 
 fish:
 	@echo 'setenv DYLD_LIBRARY_PATH /Users/briviere/projects/malloc; setenv DYLD_INSERT_LIBRARIES libft_malloc_x86_64_Darwin.so; setenv DYLD_FORCE_FLAT_NAMESPACE 1'
