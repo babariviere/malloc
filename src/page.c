@@ -6,7 +6,7 @@
 /*   By: briviere <briviere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 14:57:31 by briviere          #+#    #+#             */
-/*   Updated: 2018/02/06 15:09:06 by briviere         ###   ########.fr       */
+/*   Updated: 2018/02/07 18:08:41 by briviere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 #include "ft_io.h"
 #include <stdio.h>
 
-// TODO: pthread block
 inline t_page	**get_first_page()
 {
 	static t_page	*page;
@@ -29,9 +28,16 @@ t_page			*page_create(size_t size)
 
 	size = size + sizeof(t_page) + sizeof(t_block);
 	new_size = size + page_size() - (size % page_size());
+	//if (size < page_size() * 2)
+	//	new_size = page_size() * 2;
+	//else
+	//	new_size = page_size() * 16;
 	if ((new_page = mmap(0, new_size, PROT_READ | PROT_WRITE,
 						MAP_PRIVATE | MAP_ANON, -1, 0)) == MAP_FAILED)
-		return (MAP_FAILED);
+	{
+		perror("mmap");
+		return (0);
+	}
 	new_page->len = new_size;
 	new_page->next = 0;
 	new_page->start = 0;

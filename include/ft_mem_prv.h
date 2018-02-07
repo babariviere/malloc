@@ -6,7 +6,7 @@
 /*   By: briviere <briviere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 15:58:16 by briviere          #+#    #+#             */
-/*   Updated: 2018/02/07 11:06:10 by briviere         ###   ########.fr       */
+/*   Updated: 2018/02/07 18:06:56 by briviere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@
 # include <unistd.h>
 
 # define BLOCK_SIZE (sizeof(t_block))
-# define BLOCK_DATA(x) ((void *)((char *)x + BLOCK_SIZE + 1))
+# define BLOCK_DATA(x) ((void *)((char *)x + BLOCK_SIZE))
 
 # define PAGE_SIZE (sizeof(t_page))
-# define PAGE_DATA(x) ((void *)((char *)x + PAGE_SIZE + 1))
+# define PAGE_DATA(x) ((void *)((char *)x + PAGE_SIZE))
 
 typedef struct	s_block {
 	size_t			len;

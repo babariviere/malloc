@@ -6,7 +6,7 @@
 /*   By: briviere <briviere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 15:16:12 by briviere          #+#    #+#             */
-/*   Updated: 2018/02/07 13:32:50 by briviere         ###   ########.fr       */
+/*   Updated: 2018/02/07 18:07:02 by briviere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ t_block	*block_create(t_page *dest, size_t size)
 {
 	t_block	*block;
 	t_block	*prev_block;
-	char	*ptr;
 
 	block = dest->start;
 	if (block == 0)
@@ -30,8 +29,7 @@ t_block	*block_create(t_page *dest, size_t size)
 	while (block->next)
 		block = block->next;
 	prev_block = block;
-	ptr = (char *)block;
-	block = (t_block *)(ptr + block->len + sizeof(t_block));
+	block = (t_block *)((char *)block + block->len + sizeof(t_block));
 	prev_block->next = block;
 	block->len = size;
 	block->free = 0;
