@@ -32,10 +32,11 @@ fclean: clean
 
 re: fclean all
 
-lldb_init:
 ifeq ($(shell uname), Linux)
+lldb_init:
 	@echo 'env LD_PRELOAD=$(shell pwd)/$(NAME)' > .lldbinit
 else
+lldb_init:
 	@echo 'env DYLD_LIBRARY_PATH=/Users/briviere/projects/malloc' > .lldbinit
 	@echo 'env DYLD_INSERT_LIBRARIES=libft_malloc_x86_64_Darwin.so' > .lldbinit
 	@echo 'env DYLD_FORCE_FLAT_NAMESPACE=1' > .lldbinit
