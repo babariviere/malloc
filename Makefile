@@ -10,6 +10,7 @@ SRC=$(addprefix src/, $(SRC_NAME))
 OBJ=$(patsubst src/%.c, obj/%.o, $(SRC))
 
 INC = -Iinclude
+CC = clang
 CFLAGS = -Wall -Wextra $(INC) -g3 -O0
 ifneq ($(shell uname), Linux)
 	CFLAGS += -Werror
@@ -18,11 +19,11 @@ endif
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	gcc -o $(NAME) --shared -fPIC $(CFLAGS) $(OBJ) -Llibft -lft -Ilibft/include
+	$(CC) -o $(NAME) --shared -fPIC $(CFLAGS) $(OBJ) -Llibft -lft -Ilibft/include
 
 obj/%.o: src/%.c
 	@mkdir -p `dirname $@`
-	gcc -c -o $@ $(CFLAGS) $< -Ilibft/include
+	$(CC) -c -o $@ $(CFLAGS) $< -Ilibft/include
 
 clean:
 	rm -f $(OBJ)
@@ -43,7 +44,7 @@ lldb_init:
 endif
 
 lldb: all lldb_init
-	@gcc -o test test.c $(CFLAGS)
+	@$(CC) -o test test.c $(CFLAGS)
 	@lldb ./test
 	@rm -f test
 
@@ -51,7 +52,7 @@ ls: all lldb_init
 	@lldb ls
 
 test: all
-	gcc test.c -Iinclude -g -O0 -L. -lft_malloc_$(HOSTTYPE)
+	$(CC) test.c -Iinclude -g -O0 -L. -lft_malloc_$(HOSTTYPE)
 	@LD_LIBRARY_PATH=.:$(LD_LIBRARY_PATH) ./a.out
 
 fish:
