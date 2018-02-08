@@ -38,8 +38,8 @@ lldb_init:
 else
 lldb_init:
 	@echo 'env DYLD_LIBRARY_PATH=/Users/briviere/projects/malloc' > .lldbinit
-	@echo 'env DYLD_INSERT_LIBRARIES=libft_malloc_x86_64_Darwin.so' > .lldbinit
-	@echo 'env DYLD_FORCE_FLAT_NAMESPACE=1' > .lldbinit
+	@echo 'env DYLD_INSERT_LIBRARIES=libft_malloc_x86_64_Darwin.so' >> .lldbinit
+	@echo 'env DYLD_FORCE_FLAT_NAMESPACE=1' >> .lldbinit
 endif
 
 lldb: all lldb_init
