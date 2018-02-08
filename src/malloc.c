@@ -6,7 +6,7 @@
 /*   By: briviere <briviere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 13:31:37 by briviere          #+#    #+#             */
-/*   Updated: 2018/02/07 12:29:38 by briviere         ###   ########.fr       */
+/*   Updated: 2018/02/08 21:30:25 by briviere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,8 @@ void	*malloc(size_t size)
 	//ft_putstr(", block_addr: ");
 	//ft_putaddr(res);
 	//ft_putchar('\n');
-	//ft_putstr("data_addr: ");
-	//ft_putaddr(BLOCK_DATA(res));
-	//ft_putchar('\n');
+	ft_putstr("malloced: ");
+	ft_putaddr(BLOCK_DATA(res));
+	ft_putchar('\n');
 	return (BLOCK_DATA(res));
 }
