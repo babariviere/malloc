@@ -10,7 +10,7 @@ SRC=$(addprefix src/, $(SRC_NAME))
 OBJ=$(patsubst src/%.c, obj/%.o, $(SRC))
 
 INC = -Iinclude
-CFLAGS = -Wall -Wextra $(INC) -g
+CFLAGS = -Wall -Wextra $(INC) -g3 -O0
 ifneq ($(shell uname), Linux)
 	CFLAGS += -Werror
 endif
