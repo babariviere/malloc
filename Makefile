@@ -48,7 +48,6 @@ lldb: all lldb_init
 	@rm -f test
 
 ls: all lldb_init
-	@echo 'env LD_PRELOAD=$(shell pwd)/$(NAME)' > .lldbinit
 	@lldb ls
 
 test: all
