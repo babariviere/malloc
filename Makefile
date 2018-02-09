@@ -2,11 +2,7 @@ ifeq ($(HOSTTYPE),)
 	HOSTTYPE := $(shell uname -m)_$(shell uname -s)
 endif
 
-ifeq ($(shell uname), Linux)
 NAME = libft_malloc_$(HOSTTYPE).so
-else
-NAME = libft_malloc_$(HOSTTYPE).dylib
-endif
 
 SRC_NAME=malloc.c page.c block.c page_hlp.c free.c mutex.c realloc.c\
 		 show.c
@@ -22,13 +18,8 @@ endif
 
 all: $(NAME)
 
-ifeq ($(shell uname), Linux)
 $(NAME): $(OBJ)
-	$(CC) -o $(NAME) -shared -fPIC $(CFLAGS) $(OBJ) -Llibft -lft -Ilibft/include
-else
-$(NAME): $(OBJ)
-	$(CC) -o $(NAME) -dynamiclib -fPIC $(CFLAGS) $(OBJ) -Llibft -lft -Ilibft/include
-endif
+	$(CC) -o $(NAME) -shared -fPIC $(CFLAGS) $(OBJ) -Llibft -lft -Ilibft/include -lpthread
 
 obj/%.o: src/%.c
 	@mkdir -p `dirname $@`
