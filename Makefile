@@ -2,7 +2,11 @@ ifeq ($(HOSTTYPE),)
 	HOSTTYPE := $(shell uname -m)_$(shell uname -s)
 endif
 
+ifeq ($(shell uname), Linux)
 NAME = libft_malloc_$(HOSTTYPE).so
+else
+NAME = libft_malloc_$(HOSTTYPE).dylib
+endif
 
 SRC_NAME=malloc.c page.c block.c page_hlp.c free.c mutex.c realloc.c\
 		 show.c
@@ -18,8 +22,13 @@ endif
 
 all: $(NAME)
 
+ifeq ($(shell uname), Linux)
 $(NAME): $(OBJ)
-	$(CC) -o $(NAME) --shared -fPIC $(CFLAGS) $(OBJ) -Llibft -lft -Ilibft/include
+	$(CC) -o $(NAME) -shared -fPIC $(CFLAGS) $(OBJ) -Llibft -lft -Ilibft/include
+else
+$(NAME): $(OBJ)
+	$(CC) -o $(NAME) -dynamiclib -fPIC $(CFLAGS) $(OBJ) -Llibft -lft -Ilibft/include
+endif
 
 obj/%.o: src/%.c
 	@mkdir -p `dirname $@`
@@ -39,7 +48,7 @@ lldb_init:
 else
 lldb_init:
 	@echo 'env DYLD_LIBRARY_PATH=/Users/briviere/projects/malloc' > .lldbinit
-	@echo 'env DYLD_INSERT_LIBRARIES=libft_malloc_x86_64_Darwin.so' >> .lldbinit
+	@echo 'env DYLD_INSERT_LIBRARIES=$(NAME)' >> .lldbinit
 	@echo 'env DYLD_FORCE_FLAT_NAMESPACE=1' >> .lldbinit
 endif
 
