@@ -6,7 +6,7 @@
 /*   By: briviere <briviere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 13:31:37 by briviere          #+#    #+#             */
-/*   Updated: 2018/02/08 21:30:25 by briviere         ###   ########.fr       */
+/*   Updated: 2018/02/09 19:54:12 by briviere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "ft_io.h"
 #include <stdio.h>
 
-void	*malloc(size_t size)
+void	*malloc_core(size_t size)
 {
 	t_page	**first_page;
 	t_page	*page;
@@ -24,7 +24,6 @@ void	*malloc(size_t size)
 	ft_putstr("malloc request: ");
 	ft_putnbr(size);
 	ft_putchar('\n');
-	lock_mutex();
 	first_page = get_first_page();
 	if (*first_page == 0)
 	{
@@ -45,7 +44,6 @@ void	*malloc(size_t size)
 			res = block_create(page, size);
 		}
 	}
-	unlock_mutex();
 	if (res == 0)
 		return (0);
 	//ft_putstr("page_addr: ");
@@ -57,4 +55,14 @@ void	*malloc(size_t size)
 	ft_putaddr(BLOCK_DATA(res));
 	ft_putchar('\n');
 	return (BLOCK_DATA(res));
+}
+
+void	*malloc(size_t size)
+{
+	void	*res;
+
+	lock_mutex();
+	res = malloc_core(size);
+	unlock_mutex();
+	return (res);
 }

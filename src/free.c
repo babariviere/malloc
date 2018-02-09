@@ -6,7 +6,7 @@
 /*   By: briviere <briviere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 17:13:27 by briviere          #+#    #+#             */
-/*   Updated: 2018/02/07 12:48:51 by briviere         ###   ########.fr       */
+/*   Updated: 2018/02/09 19:58:25 by briviere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "ft_io.h"
 #include <stdio.h>
 
-void	free(void *ptr)
+void	free_core(void *ptr)
 {
 	t_page	**first_page;
 	t_page	*page;
@@ -25,14 +25,12 @@ void	free(void *ptr)
 	ft_putchar('\n');
 	if (ptr == 0)
 		return ;
-	lock_mutex();
 	first_page = get_first_page();
 	if (first_page == 0)
 		return ;
 	blk = (t_block *)ptr - 1;
 	blk->free = 1;
 	page = get_block_page(*first_page, blk);
-	unlock_mutex();
 	ft_putaddr(page);
 	ft_putchar('\n');
 	// TODO: 
@@ -40,9 +38,14 @@ void	free(void *ptr)
 		return ;
 	if (page_unused(page))
 	{
-		lock_mutex();
 		ft_putendl("free unused page");
 		page_delete(first_page, page);
-		unlock_mutex();
 	}
+}
+
+void	free(void *ptr)
+{
+	lock_mutex();
+	free_core(ptr);
+	unlock_mutex();
 }
