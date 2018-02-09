@@ -6,7 +6,7 @@
 /*   By: briviere <briviere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 14:57:31 by briviere          #+#    #+#             */
-/*   Updated: 2018/02/07 18:08:41 by briviere         ###   ########.fr       */
+/*   Updated: 2018/02/09 19:51:37 by briviere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ inline t_page	**get_first_page()
 {
 	static t_page	*page;
 
+	if (page == 0)
+		page = page_create(sizeof(t_page));
 	return (&page);
 }
 
