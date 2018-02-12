@@ -1,0 +1,1 @@
+env LD_PRELOAD=/home/babariviere/42/malloc/libft_malloc_x86_64_Linux.so

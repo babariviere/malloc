@@ -6,7 +6,7 @@
 /*   By: briviere <briviere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 15:58:16 by briviere          #+#    #+#             */
-/*   Updated: 2018/02/06 15:51:56 by briviere         ###   ########.fr       */
+/*   Updated: 2018/02/09 19:45:12 by briviere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@
 # include <unistd.h>
 
 # define BLOCK_SIZE (sizeof(t_block))
-# define BLOCK_DATA(x) ((void *)((char *)x + BLOCK_SIZE + 1))
+# define BLOCK_DATA(x) ((void *)((char *)x + BLOCK_SIZE))
 
 # define PAGE_SIZE (sizeof(t_page))
-# define PAGE_DATA(x) ((void *)((char *)x + PAGE_SIZE + 1))
+# define PAGE_DATA(x) ((void *)((char *)x + PAGE_SIZE))
 
 typedef struct	s_block {
 	size_t			len;
@@ -46,6 +46,7 @@ size_t			page_size();
 size_t			page_mem_left(t_page *page);
 int				page_unused(const t_page *page);
 t_page			*find_avail_page(t_page *ref, size_t len);
+t_block			*page_request_space(t_page *ref, size_t len);
 
 t_block			*block_create(t_page *dest, size_t size);
 t_page			*get_block_page(const t_page *ref, const t_block *blk);

@@ -6,14 +6,17 @@
 /*   By: briviere <briviere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/06 16:00:02 by briviere          #+#    #+#             */
-/*   Updated: 2018/02/06 16:00:33 by briviere         ###   ########.fr       */
+/*   Updated: 2018/02/07 18:07:50 by briviere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_mem_prv.h"
+#include "ft_io.h"
 
-void *realloc(void *ptr, size_t size)
-{
-	ft_putendl("realloc called but not implemented :(");
-	return (0);
-}
+//void *realloc(void *ptr, size_t size)
+//{
+//	(void)ptr;
+//	(void)size;
+//	ft_putendl("realloc called but not implemented :(");
+//	return (0);
+//}
